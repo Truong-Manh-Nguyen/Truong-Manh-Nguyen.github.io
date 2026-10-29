@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truong Manh Nguyen — Academic Portfolio</title>
+<meta name="description" content="Academic portfolio of Truong Manh Nguyen: information systems for decision support, credit-risk modelling and auditing, and explainable automated decisions.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Truong Manh Nguyen — Academic Portfolio">
+<meta property="og:description" content="Information systems for decision support, credit-risk modelling and auditing, and explainable automated decisions.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="site-title" href="#about">Truong Manh Nguyen</a>
+    <nav class="site-nav" aria-label="Sections">
+      <ul>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#dss">Decision support</a></li>
+        <li><a href="#internship">Internship</a></li>
+        <li><a href="#projects">Other projects</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#evidence">Evidence notes</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section id="about" aria-labelledby="about-title">
+  <h1 id="about-title">Truong Manh Nguyen</h1>
+  <p class="lede">MSc student in Data Science and Business Informatics, University of Pisa</p>
+
+  <p>I study how organisations make automated decisions with data, and how the information behind those decisions, and the explanations given back to the people they affect, can be designed responsibly. My Master's thesis works on credit-risk models for peer-to-peer lending and audits which information those models rely on. My proposed PhD asks what this means for applicants with thin credit histories.</p>
+
+  <p>I came to data science from business. I hold a BSc in E-commerce from the National Economics University in Hanoi (2019–2023), where I was the valedictorian of the E-commerce major in my 2023 graduating cohort, and my undergraduate research included a survey-based study of cryptocurrency adoption in Vietnam.</p>
+
+  <h2 class="h-sub">Research interests</h2>
+  <p>Information systems for decision support; credit-risk modelling and model auditing; explainable and contestable automated decisions; evaluation design for machine learning in organisations.</p>
+
+  <h2 class="h-sub">Proposed PhD direction</h2>
+  <p>When can alternative information substitute for credit-bureau and platform information in automated credit screening, and how should refusals based on it be explained to applicants?</p>
+
+  <h2 class="h-sub">Contact</h2>
+  <ul class="contact">
+    <li><a href="mailto:manhtruongatm@gmail.com">manhtruongatm@gmail.com</a></li>
+    <li><a href="https://www.linkedin.com/in/truong-nguyen-manh/" rel="me noopener">LinkedIn</a></li>
+    <li><a href="https://github.com/Truong-Manh-Nguyen" rel="me noopener">GitHub</a></li>
+  </ul>
+</section>
+
+<section id="research" aria-labelledby="research-title">
+  <h2 id="research-title">Research — Master's thesis</h2>
+  <h3 class="h-first">Credit-risk modelling on peer-to-peer lending data: benchmarks, feature reliance and evaluation design</h3>
+  <p class="meta">University of Pisa · in progress</p>
+  <ul class="badges" aria-label="Status">
+    <li class="badge">In progress</li>
+    <li class="badge explore">Exploratory results</li>
+  </ul>
+
+  <h3>Question</h3>
+  <p>How do tuned gradient-boosting models and, in a planned next stage, graph neural networks perform on peer-to-peer loan data, and which information do these models actually rely on?</p>
+
+  <h3>Data and methods</h3>
+  <p>The thesis uses resolved-loan cohorts from LendingClub (United States, 1.34 million loans) and Bondora (Estonia, Finland, Spain and Slovakia, 120,545 loans). As documented in the draft, a feature blacklist is intended to exclude post-origination inputs (origination-time availability remains unverified for three retained Bondora platform outputs); the pipeline prepares encoded and native-categorical representations, trains cost-weighted XGBoost and LightGBM models with staged tuning, and reports average precision (AP) together with the positive rate.</p>
+
+  <p class="terms"><strong>Terms.</strong> The positive rate, or prevalence, is the share of loans labelled as defaults and provides a reference for interpreting average precision (AP). AP combines precision at different score thresholds, weighting each by the increase in recall. Grouped permutation importance jointly shuffles selected input columns across loans and measures the resulting change in a fixed model's AP.</p>
+
+  <h3>Status</h3>
+  <p>The gradient-boosting benchmarks and a feature-reliance audit are complete. Graph models (GraphSAGE) and a comparison of graph explainers (GNNExplainer, PGExplainer) are planned and have not yet been run.</p>
+
+  <h3>Exploratory results</h3>
+  <div class="note" role="note">
+    <p><span class="note-label">Verification note.</span> These summaries are based on supplied saved-output and code extracts. Numerical consistency was checked, but the original model runs and predictive validity were not independently verified.</p>
+  </div>
+
+  <div class="result-block">
+    <p><strong>Benchmark.</strong> In a historical exploratory benchmark on a random loan-level split of LendingClub resolved loans, tuned LightGBM reached Test AP 0.430 against a positive rate of 0.199 (tuned XGBoost 0.427). This is not an unbiased estimate of performance on unseen loans: preprocessing was fitted on the full cohort including Test, one cleaning rule was target-conditioned, and the LightGBM study was designed after the XGBoost Test results were known.</p>
+  </div>
+
+  <div class="result-block">
+    <p><strong>Reliance on platform scores.</strong> In a post-hoc diagnostic of the fixed thesis models, globally permuting a group of platform-assigned grades, pricing variables and platform model outputs reduced AP by an amount equivalent to about 21–24% of AP above prevalence for LendingClub and 24–26% for Bondora. LendingClub used a stratified 20,000-loan evaluation subsample; Bondora used the full Test split. These historical diagnostics depend on the permutation scheme and inherit the thesis's evaluation limitations. They do not establish causation, information substitutability or generalisation performance. The loan-level intervals do not account for borrower dependence and may understate uncertainty, and the origination-time availability of three Bondora outputs remains unverified.</p>
+  </div>
+
+  <div class="result-block">
+    <p><strong>Composition effects.</strong> The audit compared model ranking performance with Development-derived country and country-by-issue-year lookup baselines, to investigate composition effects and motivate within-country and temporal evaluation.</p>
+  </div>
+
+  <h3>Next step</h3>
+  <p>These observations motivate the PhD question of when alternative information can substitute for bureau and platform information in automated credit screening, and how refusals based on it should be explained.</p>
+</section>
+
+<section id="dss" aria-labelledby="dss-title">
+  <h2 id="dss-title">Case study 1 — Decision support for a music-streaming business</h2>
+  <p class="meta">Team project (two members, with Thi Hien Do) · Laboratory of Data Science / Decision Support Systems · MSc Data Science and Business Informatics, University of Pisa · 2025/2026 · Prof. Anna Monreale</p>
+  <ul class="badges" aria-label="Status">
+    <li class="badge team">Team course project</li>
+  </ul>
+
+  <h3>Problem</h3>
+  <p>The course brief asked teams to simulate a decision-support system for a music-streaming company, starting from two raw files (track metadata with lyrics, and artist profiles) and progressing from data preparation to a data warehouse, ETL, an OLAP cube and dashboards.</p>
+
+  <h3>Decision context</h3>
+  <p>In the simulated case the decision-makers are a streaming platform and a record label. The analyses were designed to inform release timing, promotion and content strategy; benefits were proposed, not measured.</p>
+
+  <h3>What the team built</h3>
+  <ul class="plain">
+    <li><strong>Data preparation.</strong> Enriched incomplete artist records using public sources, geocoding (OpenStreetMap Nominatim) and regular expressions, and profiled tracks with K-means on eight acoustic features and topic modelling on lyrics.</li>
+    <li><strong>Warehouse.</strong> A snowflake-style schema with a song-level fact table (streams one month after release), a bridge table for the many-to-many song–artist relation and a junk category dimension, loaded by a batched, dependency-ordered Python loader.</li>
+    <li><strong>ETL.</strong> SSIS data flows for the course-set queries (yearly artist rankings, summer–winter release ratios, regional stream shares, and a trending/flopping classification with documented edge cases) and two team-proposed queries: a release-timing calendar of trending outcomes by month and weekday, and the association between explicit content and trending/flopping outcomes by lyric category.</li>
+    <li><strong>OLAP and BI.</strong> An SSAS cube with time and geography hierarchies; MDX queries for role-weighted (0.8/0.2) stream allocation, year-over-year and seasonal benchmarks, and a team-proposed top-artists-by-segment query; Power BI dashboards.</li>
+  </ul>
+
+  <h3>Why it matters for my research</h3>
+  <p>The project is a compact example of the information-systems view I want to bring to automated decision-making: the analytical value depends on how decision-relevant information is modelled, integrated and delivered to a decision-maker, not only on the analytical method.</p>
+
+  <h3>Limitations</h3>
+  <p>This is coursework on a simulated case: no organisational benefit was measured, and the analyses describe associations within a course dataset.</p>
+</section>
+
+<section id="internship" aria-labelledby="internship-title">
+  <h2 id="internship-title">Case study 2 — Research internship: small-object detection for anti-littering monitoring</h2>
+  <p class="meta">2025 International Internship Pilot Program in Taiwan · Research Center on AI and Sustainable Development · supervised by Prof. Pao-Ann Hsiung (Dept. of Computer Science and Information Engineering, National Chung Cheng University)</p>
+  <ul class="badges" aria-label="Status">
+    <li class="badge">Research internship</li>
+    <li class="badge warn">Report-stated figures, not verified</li>
+  </ul>
+
+  <h3>Problem</h3>
+  <p>Detecting litter and discarded cigarettes in public-space video is hard: the report describes the objects as extremely small, often blurry, and, for cigarettes, fast-moving at the moment of discarding.</p>
+
+  <h3>Approach</h3>
+  <p>I fine-tuned RF-DETR, a DETR-family real-time detector, for two tasks: littering and cigarette detection. For littering, the training data combined project CCTV footage with the public TACO dataset.</p>
+
+  <h3>Reported results — figures as stated in the internship report</h3>
+  <div class="result-block" id="internship-figures">
+    <p>Littering: test mAP@50 0.675, and 88.9% of littering events detected across 36 test videos. Cigarettes: best validation mAP@50 0.40, and 77.8% of events detected across 9 test videos.</p>
+    <div class="note" role="note">
+      <p><span class="note-label">Note.</span> These figures are not independently verified. The report does not define a "successful detection"; a training-curve figure in the report shows cigarette AP50 above the stated 0.40, and a saved notebook evaluation on the littering test images reports mAP@50 0.75 rather than 0.675. Evaluation footage is confidential.</p>
+    </div>
+  </div>
+
+  <h3>Limitations</h3>
+  <p>Small evaluation samples; a domain gap between static TACO trash and moving discards; extremely small or occluded objects.</p>
+
+  <p class="meta">This case study provides no direct repository links and reproduces no project images or footage.</p>
+</section>
+
+<section id="projects" aria-labelledby="projects-title">
+  <h2 id="projects-title">Other projects</h2>
+  <p class="meta">Team course projects, University of Pisa</p>
+  <ul class="project-list">
+    <li>
+      <h3>Data Mining 2: advanced topics</h3>
+      <p>IMDb film records and box-office time series: outlier-ensemble detection, imbalance learning, advanced classifiers, SHAP explanations, and time-series clustering and classification.</p>
+      <p><a href="https://github.com/Truong-Manh-Nguyen/Data-Mining-Advanced-Topics-and-Applications" rel="noopener">Repository<span class="visually-hidden"> for Data Mining 2</span></a></p>
+    </li>
+    <li>
+      <h3>Strategic and competitive intelligence</h3>
+      <p>Team of four: BERTopic and LDA topic modelling on a scientific-literature corpus, co-authorship network analysis and an R Shiny dashboard, linked to technology-adoption strategy frameworks.</p>
+      <p><a href="https://github.com/Truong-Manh-Nguyen/Strategic-and-Competitive-Intelligence-Analysis" rel="noopener">Repository<span class="visually-hidden"> for Strategic and competitive intelligence</span></a></p>
+    </li>
+    <li>
+      <h3>Machine learning</h3>
+      <p>MONK benchmarks and the ML-CUP regression task: comparison of KNN, random forests, SVM/SVR, XGBoost and neural networks in Keras, PyTorch and scikit-learn, with grid search.</p>
+      <p><a href="https://github.com/Truong-Manh-Nguyen/Machine-Learning-project" rel="noopener">Repository<span class="visually-hidden"> for Machine learning</span></a></p>
+    </li>
+    <li>
+      <h3>Data Mining 1</h3>
+      <p>IMDb data preparation, clustering, classification, pattern mining and regression.</p>
+      <p><a href="https://github.com/Truong-Manh-Nguyen/Data-Mining_Imdb_project" rel="noopener">Repository<span class="visually-hidden"> for Data Mining 1</span></a></p>
+    </li>
+  </ul>
+</section>
+
+<section id="publications" aria-labelledby="publications-title">
+  <h2 id="publications-title">Publications</h2>
+  <p class="citation">Khúc, T. A., <strong>Nguyễn, M. T.</strong>, Nguyễn, T. A., Lê, M. H., &amp; Nguyễn, T. H. (2022). <span lang="vi">Các nhân tố ảnh hưởng đến sự chấp nhận tiền mã hóa tại Việt Nam</span> [Factors affecting cryptocurrency adoption in Vietnam]. In <cite lang="vi">Kỷ yếu Hội thảo khoa học quốc gia: Kinh tế Việt Nam năm 2021 và triển vọng năm 2022 — Ổn định kinh tế vĩ mô và lành mạnh tài chính trong bối cảnh đại dịch Covid-19</cite> (pp. 450–465). <span lang="vi">NXB Đại học Kinh tế Quốc dân</span>. ISBN 978-604-330-227-1.</p>
+  <p class="meta">Also appears, as "<span lang="vi">Các nhân tố ảnh hưởng đến chấp nhận tiền mã hoá tại Việt Nam</span>", in <cite lang="vi">Hội thảo khoa học quốc gia: Tái định hình thị trường tài chính cho phục hồi và phát triển kinh tế</cite> (2022, pp. 316–333; <span lang="vi">NXB Thông tin và Truyền thông</span>, ISBN 978-604-80-6802-8).</p>
+  <p>A survey-based study combining the Technology Acceptance Model and the Theory of Planned Behaviour, with 14 expert interviews and structural equation modelling on 572 valid responses. In Vietnamese.</p>
+  <div class="note" role="note">
+    <p><span class="note-label">Source note:</span> bibliographic and study-design details were reviewed from supplied transcriptions of private proceedings extracts; the original PDFs were not independently inspected.</p>
+  </div>
+</section>
+
+<section id="evidence" aria-labelledby="evidence-title">
+  <h2 id="evidence-title">About the evidence on this site</h2>
+  <p>Results on this site are labelled by status. Thesis figures are exploratory results from an unfinished thesis, shown with their limitations. Internship figures are quoted from the internship report, have not been independently verified, and are shown with a note on known inconsistencies. Course projects are team work and are described at project level.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <p>© 2026 Truong Manh Nguyen. Static site; no cookies or tracking.</p>
+  </div>
+</footer>
+</body>
+</html>

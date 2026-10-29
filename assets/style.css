@@ -16,7 +16,7 @@
   --badge-team-bg: #eceaf7;
   --badge-team-text: #3b2f80;
   --focus: #c2410c;
-  --maxw: 46rem;
+  --maxw: 54rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -95,7 +95,7 @@ a:hover { text-decoration-thickness: 2px; }
   background: var(--surface);
 }
 .site-header .inner {
-  max-width: 62rem; margin: 0 auto; padding: 0.6rem 1rem;
+  max-width: 64rem; margin: 0 auto; padding: 0.6rem 1rem;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.25rem 1rem;
 }
 .site-title { font-weight: 650; color: var(--text); text-decoration: none; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
@@ -186,3 +186,47 @@ footer .inner { max-width: var(--maxw); margin: 0 auto; padding: 1.5rem 1rem 2.5
 }
 .contact li { min-width: 0; max-width: 100%; }
 .contact a, .site-nav a { overflow-wrap: anywhere; }
+
+/* ---- Portfolio v2: hero, cards, figures ---- */
+.site-nav ul { background: var(--accent-soft); border-radius: 999px; padding: 0.2rem 0.9rem; }
+.hero { padding-top: 2.25rem; }
+.hero-grid { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.75rem; align-items: center; margin-bottom: 1.5rem; }
+.portrait { width: 11rem; height: auto; aspect-ratio: 331 / 441; object-fit: cover; border-radius: 1rem; border: 1px solid var(--border); background: var(--surface); }
+.hero-text .lede { margin-bottom: 1rem; }
+.eyebrow { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; font-weight: 700; color: var(--accent); margin: 0 0 0.35rem; }
+.button { display: inline-block; padding: 0.45rem 1rem; border-radius: 999px; border: 1px solid var(--accent); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+.button:hover { background: var(--accent-soft); }
+.info-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: 1rem; margin-top: 1.25rem; }
+.info-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem 1.1rem; }
+.info-card .h-sub { margin-top: 0; }
+.info-card p { margin: 0; }
+.small-note { font-size: 0.9rem; color: var(--muted); }
+figure { margin: 0 0 1.25rem; }
+figure img { display: block; width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border); background: #ffffff; }
+figcaption { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; }
+.figure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); gap: 1rem; align-items: start; margin: 1.25rem 0 0.5rem; }
+.project-card { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; margin: 0 0 1.5rem; }
+.project-card h3 { margin-top: 0; }
+.project-card .badges { margin-bottom: 0.75rem; }
+.project-media figure { margin: 0; }
+.inline-figure { max-width: 26rem; }
+@media (max-width: 44rem) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .portrait { width: 9rem; max-width: 100%; }
+  .project-card { padding: 1rem; }
+  .site-nav ul { border-radius: 0.75rem; }
+}
+@media print {
+  .project-card, figure { break-inside: avoid; }
+  h2, h3, h2 + p.meta { break-after: avoid; }
+  .figure-grid + p { break-before: avoid; }
+  #publications { break-inside: avoid; }
+  .project-card .figure-grid img { max-height: 16rem; }
+  .site-nav ul { background: none; }
+}
+
+.project-card .figure-grid { margin: 0.75rem 0 0.75rem; }
+.project-card .figure-grid img { max-height: 26rem; object-fit: contain; }
+
+.zoom { display: block; cursor: zoom-in; }
+.zoom:focus-visible { outline-offset: 2px; }

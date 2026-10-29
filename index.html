@@ -22,9 +22,8 @@
         <li><a href="#research">Research</a></li>
         <li><a href="#dss">Decision support</a></li>
         <li><a href="#internship">Internship</a></li>
-        <li><a href="#projects">Other projects</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#publications">Publications</a></li>
-        <li><a href="#evidence">Evidence notes</a></li>
       </ul>
     </nav>
   </div>
@@ -32,26 +31,35 @@
 
 <main id="main">
 
-<section id="about" aria-labelledby="about-title">
-  <h1 id="about-title">Truong Manh Nguyen</h1>
-  <p class="lede">MSc student in Data Science and Business Informatics, University of Pisa</p>
+<section id="about" class="hero" aria-labelledby="about-title">
+  <div class="hero-grid">
+    <img class="portrait" src="assets/img/portrait.webp" width="331" height="441" alt="Portrait of Truong Manh Nguyen">
+    <div class="hero-text">
+      <p class="eyebrow">Academic portfolio</p>
+      <h1 id="about-title">Truong Manh Nguyen</h1>
+      <p class="lede">MSc student in Data Science and Business Informatics, University of Pisa</p>
+      <ul class="contact" aria-label="Contact">
+        <li><a class="button" href="mailto:manhtruongatm@gmail.com">Email</a></li>
+        <li><a class="button" href="https://www.linkedin.com/in/truong-nguyen-manh/" rel="me noopener">LinkedIn</a></li>
+        <li><a class="button" href="https://github.com/Truong-Manh-Nguyen" rel="me noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
 
   <p>I study how organisations make automated decisions with data, and how the information behind those decisions, and the explanations given back to the people they affect, can be designed responsibly. My Master's thesis works on credit-risk models for peer-to-peer lending and audits which information those models rely on. My proposed PhD asks what this means for applicants with thin credit histories.</p>
 
   <p>I came to data science from business. I hold a BSc in E-commerce from the National Economics University in Hanoi (2019–2023), where I was the valedictorian of the E-commerce major in my 2023 graduating cohort, and my undergraduate research included a survey-based study of cryptocurrency adoption in Vietnam.</p>
 
-  <h2 class="h-sub">Research interests</h2>
-  <p>Information systems for decision support; credit-risk modelling and model auditing; explainable and contestable automated decisions; evaluation design for machine learning in organisations.</p>
-
-  <h2 class="h-sub">Proposed PhD direction</h2>
-  <p>When can alternative information substitute for credit-bureau and platform information in automated credit screening, and how should refusals based on it be explained to applicants?</p>
-
-  <h2 class="h-sub">Contact</h2>
-  <ul class="contact">
-    <li><a href="mailto:manhtruongatm@gmail.com">manhtruongatm@gmail.com</a></li>
-    <li><a href="https://www.linkedin.com/in/truong-nguyen-manh/" rel="me noopener">LinkedIn</a></li>
-    <li><a href="https://github.com/Truong-Manh-Nguyen" rel="me noopener">GitHub</a></li>
-  </ul>
+  <div class="info-cards">
+    <div class="info-card">
+      <h2 class="h-sub">Research interests</h2>
+      <p>Information systems for decision support; credit-risk modelling and model auditing; explainable and contestable automated decisions; evaluation design for machine learning in organisations.</p>
+    </div>
+    <div class="info-card">
+      <h2 class="h-sub">Proposed PhD direction</h2>
+      <p>When can alternative information substitute for credit-bureau and platform information in automated credit screening, and how should refusals based on it be explained to applicants?</p>
+    </div>
+  </div>
 </section>
 
 <section id="research" aria-labelledby="research-title">
@@ -68,25 +76,18 @@
 
   <h3>Data and methods</h3>
   <p>The thesis uses resolved-loan cohorts from LendingClub (United States, 1.34 million loans) and Bondora (Estonia, Finland, Spain and Slovakia, 120,545 loans). As documented in the draft, a feature blacklist is intended to exclude post-origination inputs (origination-time availability remains unverified for three retained Bondora platform outputs); the pipeline prepares encoded and native-categorical representations, trains cost-weighted XGBoost and LightGBM models with staged tuning, and reports average precision (AP) together with the positive rate.</p>
-
   <p class="terms"><strong>Terms.</strong> The positive rate, or prevalence, is the share of loans labelled as defaults and provides a reference for interpreting average precision (AP). AP combines precision at different score thresholds, weighting each by the increase in recall. Grouped permutation importance jointly shuffles selected input columns across loans and measures the resulting change in a fixed model's AP.</p>
 
   <h3>Status</h3>
   <p>The gradient-boosting benchmarks and a feature-reliance audit are complete. Graph models (GraphSAGE) and a comparison of graph explainers (GNNExplainer, PGExplainer) are planned and have not yet been run.</p>
 
   <h3>Exploratory results</h3>
-  <div class="note" role="note">
-    <p><span class="note-label">Verification note.</span> These summaries are based on supplied saved-output and code extracts. Numerical consistency was checked, but the original model runs and predictive validity were not independently verified.</p>
-  </div>
-
   <div class="result-block">
     <p><strong>Benchmark.</strong> In a historical exploratory benchmark on a random loan-level split of LendingClub resolved loans, tuned LightGBM reached Test AP 0.430 against a positive rate of 0.199 (tuned XGBoost 0.427). This is not an unbiased estimate of performance on unseen loans: preprocessing was fitted on the full cohort including Test, one cleaning rule was target-conditioned, and the LightGBM study was designed after the XGBoost Test results were known.</p>
   </div>
-
   <div class="result-block">
     <p><strong>Reliance on platform scores.</strong> In a post-hoc diagnostic of the fixed thesis models, globally permuting a group of platform-assigned grades, pricing variables and platform model outputs reduced AP by an amount equivalent to about 21–24% of AP above prevalence for LendingClub and 24–26% for Bondora. LendingClub used a stratified 20,000-loan evaluation subsample; Bondora used the full Test split. These historical diagnostics depend on the permutation scheme and inherit the thesis's evaluation limitations. They do not establish causation, information substitutability or generalisation performance. The loan-level intervals do not account for borrower dependence and may understate uncertainty, and the origination-time availability of three Bondora outputs remains unverified.</p>
   </div>
-
   <div class="result-block">
     <p><strong>Composition effects.</strong> The audit compared model ranking performance with Development-derived country and country-by-issue-year lookup baselines, to investigate composition effects and motivate within-country and temporal evaluation.</p>
   </div>
@@ -116,6 +117,17 @@
     <li><strong>OLAP and BI.</strong> An SSAS cube with time and geography hierarchies; MDX queries for role-weighted (0.8/0.2) stream allocation, year-over-year and seasonal benchmarks, and a team-proposed top-artists-by-segment query; Power BI dashboards.</li>
   </ul>
 
+  <div class="figure-grid">
+    <figure>
+          <a class="zoom" href="assets/img/dss-schema.webp"><img src="assets/img/dss-schema.webp" width="842" height="511" loading="lazy" alt="Database diagram of the data warehouse: a central Published_song_fact table linked to date, album, category, lyrics and song_artist tables, with artist and artist_geography tables forming the snowflake."><span class="visually-hidden"> (open full-size image)</span></a>
+      <figcaption>Data-warehouse schema designed by the team (SQL Server diagram).</figcaption>
+    </figure>
+    <figure>
+          <a class="zoom" href="assets/img/dss-dashboard.webp"><img src="assets/img/dss-dashboard.webp" width="1200" height="679" loading="lazy" alt="Power BI dashboard with six panels: total streams by region, by day of the week, by season, by lyrics category and by week of the year, and the count of published songs by artist age range, each split by lyrics category."><span class="visually-hidden"> (open full-size image)</span></a>
+      <figcaption>Power BI dashboard from the team report (course dataset, descriptive).</figcaption>
+    </figure>
+  </div>
+
   <h3>Why it matters for my research</h3>
   <p>The project is a compact example of the information-systems view I want to bring to automated decision-making: the analytical value depends on how decision-relevant information is modelled, integrated and delivered to a decision-maker, not only on the analytical method.</p>
 
@@ -128,7 +140,6 @@
   <p class="meta">2025 International Internship Pilot Program in Taiwan · Research Center on AI and Sustainable Development · supervised by Prof. Pao-Ann Hsiung (Dept. of Computer Science and Information Engineering, National Chung Cheng University)</p>
   <ul class="badges" aria-label="Status">
     <li class="badge">Research internship</li>
-    <li class="badge warn">Report-stated figures, not verified</li>
   </ul>
 
   <h3>Problem</h3>
@@ -137,60 +148,102 @@
   <h3>Approach</h3>
   <p>I fine-tuned RF-DETR, a DETR-family real-time detector, for two tasks: littering and cigarette detection. For littering, the training data combined project CCTV footage with the public TACO dataset.</p>
 
-  <h3>Reported results — figures as stated in the internship report</h3>
+  <h3>Reported results</h3>
   <div class="result-block" id="internship-figures">
     <p>Littering: test mAP@50 0.675, and 88.9% of littering events detected across 36 test videos. Cigarettes: best validation mAP@50 0.40, and 77.8% of events detected across 9 test videos.</p>
-    <div class="note" role="note">
-      <p><span class="note-label">Note.</span> These figures are not independently verified. The report does not define a "successful detection"; a training-curve figure in the report shows cigarette AP50 above the stated 0.40, and a saved notebook evaluation on the littering test images reports mAP@50 0.75 rather than 0.675. Evaluation footage is confidential.</p>
-    </div>
+    <p class="small-note">Figures as reported in the internship report; the evaluation footage is confidential.</p>
   </div>
 
   <h3>Limitations</h3>
   <p>Small evaluation samples; a domain gap between static TACO trash and moving discards; extremely small or occluded objects.</p>
-
-  <p class="meta">This case study provides no direct repository links and reproduces no project images or footage.</p>
 </section>
 
 <section id="projects" aria-labelledby="projects-title">
-  <h2 id="projects-title">Other projects</h2>
-  <p class="meta">Team course projects, University of Pisa</p>
-  <ul class="project-list">
-    <li>
-      <h3>Data Mining 2: advanced topics</h3>
-      <p>IMDb film records and box-office time series: outlier-ensemble detection, imbalance learning, advanced classifiers, SHAP explanations, and time-series clustering and classification.</p>
+  <h2 id="projects-title">Course projects</h2>
+  <p class="meta">Team course projects, MSc Data Science and Business Informatics, University of Pisa</p>
+
+  <article class="project-card" aria-labelledby="p-dm2">
+    <div class="project-body">
+      <h3 id="p-dm2">Data Mining 2: advanced topics on IMDb data</h3>
+      <ul class="badges" aria-label="Status"><li class="badge team">Team course project</li></ul>
+      <p><strong>Context.</strong> An end-to-end analysis of IMDb film records and box-office revenue time series, covering the advanced part of the data-mining curriculum.</p>
+      <p><strong>Approach.</strong> Outliers were flagged by majority vote over several detectors (LOF, LODA, Isolation Forest, HBOS, CBLOF, ABOD). Under-sampling, over-sampling (SMOTE, ADASYN) and class weighting were compared for an imbalanced rating target. SVMs, neural networks, ensembles and XGBoost were trained for classification and regression, and explained with SHAP. Revenue curves were clustered with K-means (Euclidean and DTW) and DBSCAN, mined for motifs with the matrix profile, and classified with Rocket, shapelets and KNN.</p>
+      <div class="figure-grid">
+        <figure>
+          <a class="zoom" href="assets/img/dm2-shap.webp"><img src="assets/img/dm2-shap.webp" width="770" height="940" loading="lazy" alt="SHAP beeswarm plot for one rating class, ranking film features by impact; title type, start year, runtime and rating count have the largest effects."><span class="visually-hidden"> (open full-size image)</span></a>
+          <figcaption>SHAP summary plot for one class of the rating classifier (ratings in the interval (8, 9]).</figcaption>
+      </figure>
+        <figure>
+          <a class="zoom" href="assets/img/dm2-undersampling-roc.webp"><img src="assets/img/dm2-undersampling-roc.webp" width="390" height="392" loading="lazy" alt="Test-set ROC curves comparing a no-resampling baseline with decision trees tuned after five under-sampling methods (random under-sampling, condensed nearest neighbour, edited nearest neighbour, Tomek links, cluster centroids); AUC values in the legend range from 0.69 to 0.78."><span class="visually-hidden"> (open full-size image)</span></a>
+          <figcaption>ROC curves for five under-sampling strategies against a no-resampling baseline (AUC values as reported in the team notebook).</figcaption>
+        </figure>
+      </div>
       <p><a href="https://github.com/Truong-Manh-Nguyen/Data-Mining-Advanced-Topics-and-Applications" rel="noopener">Repository<span class="visually-hidden"> for Data Mining 2</span></a></p>
-    </li>
-    <li>
-      <h3>Strategic and competitive intelligence</h3>
-      <p>Team of four: BERTopic and LDA topic modelling on a scientific-literature corpus, co-authorship network analysis and an R Shiny dashboard, linked to technology-adoption strategy frameworks.</p>
+    </div>
+  </article>
+
+  <article class="project-card" aria-labelledby="p-sci">
+    <div class="project-body">
+      <h3 id="p-sci">Strategic and competitive intelligence: drone light shows in Italy</h3>
+      <ul class="badges" aria-label="Status"><li class="badge team">Team of four</li></ul>
+      <p><strong>Context.</strong> A market-intelligence study of the drone light-show industry in Italy, aimed at identifying key intelligence topics and questions for a company entering the market.</p>
+      <p><strong>Approach.</strong> The team framed the market with Porter's Five Forces, SWOT and VUCA analyses, then analysed scientific publications on drone technologies with BERTopic topic modelling and a dictionary-based keyword analysis of abstracts, and built an interactive R Shiny dashboard with a visNetwork network of technology keywords that co-occur in the same publications. Candidate key intelligence topics and questions were generated with ChatGPT from the Five Forces and VUCA analysis under a team-defined rule set (clarity, feasibility, relevance, impact); the team then selected the final questions, drawing also on the publication analysis.</p>
+      <div class="figure-grid">
+        <figure>
+          <a class="zoom" href="assets/img/sci-keywords.webp"><img src="assets/img/sci-keywords.webp" width="1000" height="543" loading="lazy" alt="Horizontal bar chart of the 30 technology keywords from a predefined dictionary most often matched in the abstracts of the analysed publications; surveillance, machine learning and deep learning have the most matches."><span class="visually-hidden"> (open full-size image)</span></a>
+          <figcaption>Matches to a predefined technology-keyword dictionary in the abstracts of the analysed publications.</figcaption>
+      </figure>
+      </div>
       <p><a href="https://github.com/Truong-Manh-Nguyen/Strategic-and-Competitive-Intelligence-Analysis" rel="noopener">Repository<span class="visually-hidden"> for Strategic and competitive intelligence</span></a></p>
-    </li>
-    <li>
-      <h3>Machine learning</h3>
-      <p>MONK benchmarks and the ML-CUP regression task: comparison of KNN, random forests, SVM/SVR, XGBoost and neural networks in Keras, PyTorch and scikit-learn, with grid search.</p>
+    </div>
+  </article>
+
+  <article class="project-card" aria-labelledby="p-ml">
+    <div class="project-body">
+      <h3 id="p-ml">Machine learning: model selection on MONK and ML-CUP</h3>
+      <ul class="badges" aria-label="Status"><li class="badge team">Team of two, with Thi Hien Do</li></ul>
+      <p><strong>Context.</strong> A course project comparing machine-learning models and neural-network libraries under one validation scheme, on the MONK classification benchmarks and the course's ML-CUP 2025 regression task.</p>
+      <p><strong>Approach.</strong> For MONK, one-hot encoded inputs were used to tune SVM, k-NN, random forests and neural networks (scikit-learn and Keras) with stratified 3-fold cross-validated grid search before testing. For ML-CUP, after an 80/20 split and PCA, k-NN, SVR, random forests, XGBoost and neural networks (scikit-learn, Keras and PyTorch, with SGD or Adam, L2 regularisation and early stopping) were tuned by 5-fold cross-validated grid search. The final model, a k-NN regressor, was then chosen by internal-test error and runtime, retrained on all training data and applied to the blind test set.</p>
+      <div class="figure-grid">
+        <figure>
+          <a class="zoom" href="assets/img/ml-cup-learning-curve.webp"><img src="assets/img/ml-cup-learning-curve.webp" width="989" height="490" loading="lazy" alt="Learning curve of mean training and validation error (MEE) over 500 epochs for the Keras neural network trained with Adam on ML-CUP; training error falls to about 12.6 while validation error levels off at about 17.5."><span class="visually-hidden"> (open full-size image)</span></a>
+          <figcaption>Cross-validated learning curve of the best Keras (Adam) neural-network configuration on ML-CUP; the final selected model was k-NN.</figcaption>
+      </figure>
+        <figure>
+          <a class="zoom" href="assets/img/ml-monk-roc.webp"><img src="assets/img/ml-monk-roc.webp" width="1156" height="411" loading="lazy" alt="Three ROC panels for MONK-1, one each for k-NN, SVM and random forest; the legends report AUC 0.913 for k-NN, 1.000 for SVM and 0.997 for random forest."><span class="visually-hidden"> (open full-size image)</span></a>
+          <figcaption>ROC curves for the tuned k-NN, SVM and random forest on MONK-1 (values as reported in the team report).</figcaption>
+      </figure>
+      </div>
       <p><a href="https://github.com/Truong-Manh-Nguyen/Machine-Learning-project" rel="noopener">Repository<span class="visually-hidden"> for Machine learning</span></a></p>
-    </li>
-    <li>
-      <h3>Data Mining 1</h3>
-      <p>IMDb data preparation, clustering, classification, pattern mining and regression.</p>
+    </div>
+  </article>
+
+  <article class="project-card" aria-labelledby="p-dm1">
+    <div class="project-body">
+      <h3 id="p-dm1">Data Mining 1: fundamentals on IMDb data</h3>
+      <ul class="badges" aria-label="Status"><li class="badge team">Team of three</li></ul>
+      <p><strong>Context.</strong> The fundamentals project of the data-mining course (2024/2025), exploring an IMDb dataset of film and television metadata.</p>
+      <p><strong>Approach.</strong> After data understanding and preparation (missing values, Mahalanobis-distance outliers, transformations and correlations), titles were clustered with K-means, DBSCAN and hierarchical clustering; title type and rating class were predicted with k-NN, decision trees and Naïve Bayes; Apriori and FP-Growth mined association rules; and linear, ridge, lasso, decision-tree and k-NN regression modelled numeric targets.</p>
+      <div class="figure-grid">
+        <figure>
+          <a class="zoom" href="assets/img/dm1-pca-clusters.webp"><img src="assets/img/dm1-pca-clusters.webp" width="429" height="351" loading="lazy" alt="Scatter plot of IMDb titles on the first two principal components, coloured by four K-means clusters."><span class="visually-hidden"> (open full-size image)</span></a>
+          <figcaption>K-means clusters of IMDb titles shown on two principal components.</figcaption>
+      </figure>
+        <figure>
+          <a class="zoom" href="assets/img/dm1-dendrogram.webp"><img src="assets/img/dm1-dendrogram.webp" width="415" height="289" loading="lazy" alt="Dendrogram from Ward-linkage hierarchical clustering of IMDb titles."><span class="visually-hidden"> (open full-size image)</span></a>
+          <figcaption>Ward-linkage dendrogram from the hierarchical clustering.</figcaption>
+      </figure>
+      </div>
       <p><a href="https://github.com/Truong-Manh-Nguyen/Data-Mining_Imdb_project" rel="noopener">Repository<span class="visually-hidden"> for Data Mining 1</span></a></p>
-    </li>
-  </ul>
+    </div>
+  </article>
 </section>
 
 <section id="publications" aria-labelledby="publications-title">
   <h2 id="publications-title">Publications</h2>
-  <p class="citation">Khúc, T. A., <strong>Nguyễn, M. T.</strong>, Nguyễn, T. A., Lê, M. H., &amp; Nguyễn, T. H. (2022). <span lang="vi">Các nhân tố ảnh hưởng đến sự chấp nhận tiền mã hóa tại Việt Nam</span> [Factors affecting cryptocurrency adoption in Vietnam]. In <cite lang="vi">Kỷ yếu Hội thảo khoa học quốc gia: Kinh tế Việt Nam năm 2021 và triển vọng năm 2022 — Ổn định kinh tế vĩ mô và lành mạnh tài chính trong bối cảnh đại dịch Covid-19</cite> (pp. 450–465). <span lang="vi">NXB Đại học Kinh tế Quốc dân</span>. ISBN 978-604-330-227-1.</p>
-  <p class="meta">Also appears, as "<span lang="vi">Các nhân tố ảnh hưởng đến chấp nhận tiền mã hoá tại Việt Nam</span>", in <cite lang="vi">Hội thảo khoa học quốc gia: Tái định hình thị trường tài chính cho phục hồi và phát triển kinh tế</cite> (2022, pp. 316–333; <span lang="vi">NXB Thông tin và Truyền thông</span>, ISBN 978-604-80-6802-8).</p>
-  <p>A survey-based study combining the Technology Acceptance Model and the Theory of Planned Behaviour, with 14 expert interviews and structural equation modelling on 572 valid responses. In Vietnamese.</p>
-  <div class="note" role="note">
-    <p><span class="note-label">Source note:</span> bibliographic and study-design details were reviewed from supplied transcriptions of private proceedings extracts; the original PDFs were not independently inspected.</p>
-  </div>
-</section>
-
-<section id="evidence" aria-labelledby="evidence-title">
-  <h2 id="evidence-title">About the evidence on this site</h2>
-  <p>Results on this site are labelled by status. Thesis figures are exploratory results from an unfinished thesis, shown with their limitations. Internship figures are quoted from the internship report, have not been independently verified, and are shown with a note on known inconsistencies. Course projects are team work and are described at project level.</p>
+  <p class="citation">Khuc, T. A., <strong>Nguyen, M. T.</strong>, Nguyen, T. A., Le, M. H., &amp; Nguyen, T. H. (2022). Factors affecting cryptocurrency adoption in Vietnam. In <cite>National Scientific Conference on Vietnam Economy in 2021 and Outlook for 2022: "Macroeconomic Stability and Financial Soundness in the Context of the Covid-19 Pandemic"</cite> (pp. 450–465). National Economics University Press. ISBN 978-604-330-227-1.</p>
+  <p class="meta">Also appears in the proceedings of the <cite>National Science Conference "Reshaping the Financial Market for Economic Recovery and Development"</cite> (2022, co-organised by Thuongmai University; Information and Communications Publishing House, ISBN 978-604-80-6802-8), pp. 316–333. Titles are English translations; the paper is written in Vietnamese.</p>
+  <p>A survey-based study combining the Technology Acceptance Model and the Theory of Planned Behaviour, with 14 expert interviews and structural equation modelling on 572 valid responses.</p>
 </section>
 
 </main>
